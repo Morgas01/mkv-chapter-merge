@@ -1,0 +1,230 @@
+#!/usr/bin/env node
+
+require("../menu")();
+
+/*
+let Enquirer=require("enquirer");
+let api=require("..");
+let SC=require("morgas").shortcut({
+	Helper:"FileHelper",
+	File:"File",
+	flatten:"flatten"
+})
+let PathPrompt= require("../prompts/PathPrompt");
+
+
+(async()=>
+{
+
+	let path=process.cwd();
+	let getFiles=async function()
+	{
+		let base=new SC.File(path);
+		let list=await base.listFiles()
+		return (await Promise.all(
+			list.map(f=>
+				base.clone().changePath(f).stat().then(s=>[s.isFile(),f],()=>[false])
+			)
+		))
+		.filter(e=>e[0]).map(e=>e[1]);
+	};
+	let files=await getFiles();
+
+	let menuIndex=0;
+	let menu=()=>
+	{
+		let prompt = new Enquirer.Select({
+			header:()=>`${path}	(${files.length} files)`,
+			message:"select an action",
+			index:menuIndex,
+			choices:[
+				{
+					message:"change path",
+					value:"change"
+				},
+				{
+					message:"select files",
+					value:"select"
+				},
+				{
+					message:"deselect files",
+					value:"deselect"
+				},
+				{
+					message:"sort files",
+					value:"sort"
+				},
+				{
+					message:"parse chapters",
+					value:"parse"
+				},
+				{
+					message:"exit",
+					value:"exit"
+				}
+			]
+		});
+		let p=prompt.run();
+		p.then(()=>menuIndex=prompt.index)
+		return p;
+	};
+
+	let showMenu=async ()=>
+	{
+		while(true)
+		{
+			let menuAction=await menu();
+			try
+			{
+				switch(menuAction)
+				{
+					case "change":
+						path= await new PathPrompt({
+							limit:10,
+							message:"choose folder",
+							path
+						}).run();
+						files=await getFiles();
+					case "sort":
+						files=await sort();
+						break;
+					case "select":
+						files.push(...(await select()));
+						break;
+					case "deselect":
+						let toDeleselect=await deselect();
+						files=files.filter(f=>!toDeleselect.includes(f));
+						break;
+					case "parse":
+						await parse(files.map(f=>new SC.File(path).changePath(f)));
+						break;
+					case "exit":
+						return;
+				}
+			}
+			catch(error)
+			{
+				if(error)console.error(error)
+			}
+		}
+	};
+	let selectHint="(space=toggle, a=toggle all, i=invert, enter=finish)"
+	let select=async ()=>
+	{
+		list=await getFiles();
+		let choices=list.filter(f=>!files.includes(f));
+		if(choices.length==0)
+		{
+			return new Enquirer.Input({input:"all files already selected."}).submit().then(()=>[]);
+		}
+		return Enquirer.multiselect({
+			limit:10,
+			hint:selectHint,
+			message:"add to selected",
+			choices,
+			multiple:true
+		})
+	};
+
+	let deselect=async ()=>
+	{
+		list=await getFiles();
+		let choices=list.filter(f=>files.includes(f));
+		if(choices.length==0)
+		{
+			return new Enquirer.Input({input:"no files selected."}).cancel().then(()=>[]);
+		}
+		return Enquirer.multiselect({
+			limit:10,
+			hint:selectHint,
+			message:"add to deselected",
+			choices,
+			multiple:true
+		});
+	};
+
+	let sort=()=>{
+		if(files.length==0)
+		{
+			return new Enquirer.Input({input:"no files selected."}).cancel().then(()=>[]);
+		}
+		return Enquirer.sort({
+			limit:10,
+			message:"sort files",
+			choices:files
+		});
+	}
+
+	let parse=async (files)=>
+	{
+		process.stdout.write("parsing...\n");
+		let fileInfos=await api.getChapters(files).catch(e=>{console.error(e);return []});
+		process.stdout.write("mapping...\n");
+		let chapters=SC.flatten(fileInfos.map(api.linkFileChapters));
+
+		let chapterMenuIndex=0;
+		let chapterMenu=()=>
+		{
+			let prompt=new Enquirer.Select({
+				header:chapters.length+" Chapters",
+				message:"select an action",
+				index:chapterMenuIndex,
+				choices:[
+					{
+						message:"edit chapter",
+						value:"edit"
+					},
+					{
+						message:"merge chapters",
+						value:"merge"
+					},
+					{
+						message:"back",
+						value:"back"
+					}
+				]
+			});
+			let p=prompt.run();
+			p.then(()=>chapterMenuIndex=prompt.index);
+			return p;
+		};
+
+		let showChapterMenu=async()=>
+		{
+			while(true)
+			{
+				let chapterMenuAction=await chapterMenu();
+
+				try
+				{
+					switch(chapterMenuAction)
+					{
+						case "edit":
+							await edit();
+							break;
+						case "sort":
+							await sort();
+							break;
+						case "merge":
+							await merge();
+							break;
+						case "back":
+							return;
+							break;
+					}
+				}
+				catch(e)
+				{
+					if(error)console.error(error)
+				}
+			}
+		}
+
+
+		await showChapterMenu();
+	}
+
+	showMenu();
+
+})();
+*/

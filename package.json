@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "ebml": "github:Morgas01/node-ebml",
-    "mediastream-to-webm": "^1.0.2"
+    "enquirer": "^2.3.1",
+    "inquirer": "^6.5.0",
+    "mediastream-to-webm": "^1.0.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {},
   "scripts": {
