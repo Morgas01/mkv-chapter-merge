@@ -1,15 +1,14 @@
 let readChapters=require("./lib/readChapters");
 
 let getChapters=require("./lib/getChapters");
-let linkFileChapters=require("./lib/linkFileChapters");
+let createOrderedChapter=require("./lib/createOrderedChapter");
 let mergeChapters=require("./lib/mergeChapters");
 
 
 module.exports={
 	getChapters,
-	linkFileChapters,
+	createOrderedChapter,
 	mergeChapters,
-	getChapters,
 
 	// internally used
 

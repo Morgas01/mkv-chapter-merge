@@ -22,16 +22,13 @@ module.exports=class PathPrompt extends AutoComplete
 	constructor(options={})
 	{
 		options.choices=getPathChoices;
+		options.hint=hint
 		super(options);
 		this.helper=new SC.Helper(options.path);
 	}
 	header()
 	{
 		return this.helper.getAbsolutePath();
-	}
-	hint()
-	{
-		return hint;
 	}
 	isDirectory(input)
 	{
