@@ -164,7 +164,7 @@ module.exports=class ChapterEditor extends Sort
 	{
 		return this.choices;
 	}
-	set visible(v){console.log(new Error().stack)}
+	set visible(v){}
 	get visibleIndex()
 	{
 		return this.options.visibleIndex;

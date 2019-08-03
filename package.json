@@ -1,6 +1,6 @@
 {
   "name": "mkv-chapter-merge",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "reads and merges chapters of .mkv files into one file linking the chapters",
   "main": "index.js",
   "dependencies": {
