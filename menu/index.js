@@ -83,6 +83,7 @@ module.exports=async function({path=".",limit=10,exitText="exit",outStream=proce
 		let result=await prompt({
 			type:"sort",
 			name:"sort",
+			hint:"(Use <shift>+<up/down> to sort; first displayed item will be first in list!)",
 			message:"sort files",
 			choices:files.slice()
 		});

@@ -81,7 +81,9 @@ module.exports=async function ({files,outStream,path,enquirer=new Enquirer(),lim
 	let merge= async()=>
 	{
 		let output = await SC.utils.findUnusedName(new SC.File(path).changePath("merged.mkv"));
-		return api.mergeChapters(chapters.filter(e=>!e.skip).map(e=>e.chapter),new SC.File(output));
+		let outFile=new SC.File(output);
+		await api.mergeChapters(chapters.filter(e=>!e.skip).map(e=>e.chapter),outFile);
+		outStream.write("merged into "+outFile.getName()+"\n");
 	};
 
 	while(true)

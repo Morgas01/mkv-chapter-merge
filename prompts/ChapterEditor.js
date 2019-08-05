@@ -16,7 +16,7 @@ module.exports=class ChapterEditor extends Sort
 		options.display.skip=options.display.skip!==false;
 		options.display.duplicate=options.display.duplicate!==false;
 		options.display.filename=options.display.filename!==false;
-		options.hint=()=>hint+this.limit;
+		options.hint=hint;
 		options.visibleIndex=0;
 		super(options);
 		this.setMessages();
@@ -27,7 +27,7 @@ module.exports=class ChapterEditor extends Sort
 
 		for(let choice of this.choices)
 		{
-			choice.message=()=>(fill+choice.index).slice(-fill.length)+" "+choice.value.getMessage(this.options.display);
+			choice.message=()=>(fill+this.choices.findIndex(c=>c==choice)).slice(-fill.length)+" "+choice.value.getMessage(this.options.display);
 		}
 	}
 	up()
