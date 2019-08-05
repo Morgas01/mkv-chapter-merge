@@ -1,13 +1,12 @@
 {
   "name": "mkv-chapter-merge",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "reads and merges chapters of .mkv files into one file linking the chapters",
   "main": "index.js",
   "dependencies": {
     "ebml": "github:Morgas01/node-ebml",
+    "ebml-json": "^1.0.0",
     "enquirer": "^2.3.1",
-    "inquirer": "^6.5.0",
-    "mediastream-to-webm": "^1.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},
@@ -19,6 +18,6 @@
     "ordered",
     "chapter"
   ],
-  "author": "",
+  "author": "Morgas01",
   "license": "MIT"
 }
