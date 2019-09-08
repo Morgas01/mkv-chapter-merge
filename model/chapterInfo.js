@@ -22,15 +22,15 @@ Object.assign(ChapterInfo.prototype,{
 	{
 		return new ChapterInfo({
 			fileInfo,
-			uid:uidGenerator(),
+			uid:uidSupplier(),
 			name:this.name,
-			segmentUID:this.segmentUID,
-			segmentEditionUID:this.segmentEditionUID||this.uid,
+			segmentUID:this.segmentUID||this.fileInfo.segmentUID,
+			segmentEditionUID:this.segmentUID?this.segmentEditionUID:this.uid,
 			timeStart:this.timeStart,
 			timeEnd:this.timeEnd,
 		});
 	},
-	getChapterJson()
+	getJson()
 	{
 		return createChapterJson(this);
 	}
@@ -42,8 +42,8 @@ Object.assign(ChapterInfo,{
 	parseJson(chapterJson,fileInfo)
 	{
 		let param={
-			fileInfo
-			name:DEFAULT_NAME,
+			fileInfo,
+			name:ChapterInfo.DEFAULT_NAME,
 			uid:null,
 			segmentUID:null,
 			segmentEditionUID:null,
@@ -66,4 +66,4 @@ Object.assign(ChapterInfo,{
 	}
 });
 
-mdules.exports=ChapterInfo;
+module.exports=ChapterInfo;

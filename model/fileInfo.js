@@ -9,18 +9,20 @@ let writeFile=require("../lib/writeFile");
 let FileInfo=function(param={})
 {
 	({
+		path:this.path,
 		chapters:this.chapters=[], //ChapterInfo[]
 		segmentUID:this.segmentUID, //buffer
 		duration:this.duration, //number
 		timecodeScale:this.timecodeScale=1E6 //number
 	}=param);
+	this.chapters.forEach(c=>c.fileInfo=this);
 };
 Object.assign(FileInfo.prototype,{
 	getDurationAsBuffer()
 	{
 		FileInfo.calcDurationBuffer(this.duration,this.timecodeScale);
 	},
-	getFileJson()
+	getJson()
 	{
 		return createFileJson(this);
 	},
@@ -31,33 +33,35 @@ Object.assign(FileInfo.prototype,{
 });
 //static
 Object.assign(FileInfo,{
-	parseJson(json)
+	parseJson(json,{path}={})
 	{
+		if(!json.SegmentUID) return null; // non mkv file
+
 		let param={
-			chapters,
+			path,
+			chapters:[],
 			segmentUID:json.SegmentUID.data,
 			duration:json.Duration.value,
 			timecodeScale:json.TimecodeScale.value
 		};
-
-		if(!json.SegmentUID) return null; // non mkv file
 
 		if(json.Chapters)
 		{
 			let chapterTags=checkArray(json.Chapters.EditionEntry)
 			.reduce((array,edition)=>
 			{
-				array.push(...checkArray(edition.chapterAtom));
+				array.push(...checkArray(edition.ChapterAtom));
 				return array;
-			}),[]);
+			},[]);
 
-			param.chapters=chapterTags.map(chapterTag=>ChapterInfo.parseJson(chapterTag,this));
+			param.chapters=chapterTags.map(chapterTag=>ChapterInfo.parseJson(chapterTag));
 		}
 		else // file as chapter
 		{
 			param.chapters=[
-				ChapterInfo.parseTag({
+				ChapterInfo.parseJson({
 					ChapterSegmentUID:param.segmentUID,
+					timeStart:numberToBuffer(0),
 					timeEnd:FileInfo.calcDurationBuffer(param.duration,param.timecodeScale)
 				})
 			];
@@ -67,14 +71,16 @@ Object.assign(FileInfo,{
 	},
 	calcDurationBuffer(duration,scale)
     {
-    	return numberToBuffer(duration*timecodeScale);
+    	return numberToBuffer(duration*scale);
     },
     createLinkedFile(chapters,{path="merged.mkv",uidSupplier=generateUid}={})
     {
-    	let linkedFile=new FileInfo({
+    	return new FileInfo({
     		path,
-    		uid:uidSupplier()
+    		uid:uidSupplier(),
+    		chapters:chapters.map(chapter=>chapter.createLinkedChapter({uidSupplier}))
     	});
-    	linkedFile.chapters=chapters.map(chapter=>chapter.createLinkedChapter({fileInfo:linkedFile,uidSupplier))
     }
 });
+
+module.exports=FileInfo;

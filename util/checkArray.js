@@ -5,6 +5,7 @@
  */
 module.exports=function checkArray(data)
 {
+	if(data==null) return [];
 	if(!Array.isArray(data)) data=[data];
 	return data;
 }
