@@ -1,5 +1,5 @@
 # mkv-chapter-merge
-reads and merges chapters of .mkv files into one file linking the chapters.
+simple API to manipulate and chapters and create a linking matroska file.
 
 #install 
 npm\
@@ -7,10 +7,30 @@ npm\
 
 
 # Usage
-* as commandline interface\
-``mkvChapterMerge``
-* programmatically\
-``let api=require("mkv-chapter-merge")``
+```
+//get the api
+let api=require("mkv-chapter-merge");
+//get the FileInfo;
+api.readFileInfo(pathToFile)
+.then(fileInfo=>
+{
+    //do stuff ...
+    api.repair.sortChapters(fileInfo);
+    api.repair.fillGaps(fileInfo);
+    
+    let linkedFileInfo=api.FileInfo.createLinkedFile(fileInfo.chapters,{path:"output.mkv"});
+    //write new file
+    return linkedFileInfo.writeToFile(); //returns promise
+})
+.then(()=>
+{
+    console.log("finish");
+},
+(error)=>
+{
+    console.error(error)
+});
+```
 
 #API
 TODO
