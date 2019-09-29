@@ -20,7 +20,7 @@ let FileInfo=function(param={})
 Object.assign(FileInfo.prototype,{
 	getDurationAsBuffer()
 	{
-		FileInfo.calcDurationBuffer(this.duration,this.timecodeScale);
+		return FileInfo.calcDurationBuffer(this.duration,this.timecodeScale);
 	},
 	getJson()
 	{
