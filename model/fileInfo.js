@@ -60,9 +60,10 @@ Object.assign(FileInfo,{
 		{
 			param.chapters=[
 				ChapterInfo.parseJson({
-					ChapterSegmentUID:param.segmentUID,
-					timeStart:numberToBuffer(0),
-					timeEnd:FileInfo.calcDurationBuffer(param.duration,param.timecodeScale)
+					ChapterUID:{data:generateUid()},
+					ChapterSegmentUID:json.SegmentUID,
+					ChapterTimeStart:{data:numberToBuffer(0)},
+					ChapterTimeEnd:{data:FileInfo.calcDurationBuffer(param.duration,param.timecodeScale)}
 				})
 			];
 		}
