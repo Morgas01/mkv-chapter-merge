@@ -1,15 +1,15 @@
-# mkv-chapter-merge
+# mkv-chapters
 simple API to manipulate and chapters and create a linking matroska file.
 
 #install 
 npm\
-``npm install mkv-chapter-merge``
+``npm install mkv-chapters``
 
 
 # Usage
 ```
 //get the api
-let api=require("mkv-chapter-merge");
+let api=require("mkv-chapters");
 //get the FileInfo;
 api.readFileInfo(pathToFile)
 .then(fileInfo=>
